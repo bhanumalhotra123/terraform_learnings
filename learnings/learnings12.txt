@@ -1,0 +1,16 @@
+terraform validate
+
+S C:\Users\HP\Desktop\terraform_learnings\learnings> terraform validate
+╷
+│ Error: Unsupported argument
+│
+│   on main.tf line 9, in resource "aws_instance" "nginx":
+│    9:   instance_ = "t2.micro"               # Instance type (change as needed)
+│
+│ An argument named "instance_" is not expected here.
+╵
+PS C:\Users\HP\Desktop\terraform_learnings\learnings> terraform validate
+Success! The configuration is valid.
+
+
+terraform validate also just checks the local configurations.

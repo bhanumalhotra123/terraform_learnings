@@ -1,0 +1,56 @@
+https://www.terraform.io/
+
+What is terraform?
+
+Harshicorp tools: terraform, vault, packer etc
+
+Infrastructure as code(In aws = cloudformation)
+
+Terraform takes the configuration file(*.tf) and makes the api calls on behalf of us to the cloud provider.
+
+
+
+HCL(Harshicorp Configuration Language)
+
+Why can't harshicorp use languages like yaml or yaml for configuration files? Why do they have HCL?
+
+Mainly Harshicorp started it for terraform and later extended to other projects like packer etc.
+One of the reason for this is in case of json you can't add a comment, in HCL you can.
+
+
+
+
+How terraform extends its functionallity as you download it with just a single binary ? Plugins
+
+https://registry.terraform.io/browse/providers
+
+Terraform provides alot of provides: kubernetes, aws, alibaba cloud.
+
+They even have the provider for random(let us say you want to create a S3 bucket and we know S3 bucket name has to be unique, we can use this for random provider for it instead of writing random name by ourselves)
+
+
+
+Miss conception about terraform: the code can be used anywhere.
+
+Say you are working with AWS --> VPC and now you want to shift to another.
+
+Now all the api's are different for say google cloud. So you need to change the name of provider, name of resource
+
+
+
+
+# Define the provider (AWS in this case)
+provider "aws" {
+  region = "us-east-1"  # You can change the region to your desired region
+}
+
+# Define the AWS EC2 instance resource
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"  # Amazon Linux 2 AMI ID
+  instance_type = "t2.micro"               # Instance type (change as needed)
+}
+
+# Output the public IP address of the EC2 instance
+output "public_ip" {
+  value = aws_instance.example.public_ip
+}

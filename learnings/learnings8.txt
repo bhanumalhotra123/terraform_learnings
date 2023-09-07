@@ -1,0 +1,15 @@
+An internet gateway should always be created after vpc?
+
+In earlier versions of terraform you had to add depends_on
+
+yes
+
+So how terraform takes care of the creation?
+
+terraform graph  > graph.dot 
+
+dot -Tpng graph.dot -o graph.png
+
+Now terraform is smart!! 
+
+

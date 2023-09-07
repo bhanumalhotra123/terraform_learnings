@@ -1,0 +1,127 @@
+terraform state
+
+It is way to interact with terraform.tfstate file
+
+PS C:\Users\HP\Desktop\terraform_learnings\learnings> terraform state list
+aws_instance.nginx
+
+
+PS C:\Users\HP\Desktop\terraform_learnings\learnings> terraform state list
+aws_instance.nginx
+PS C:\Users\HP\Desktop\terraform_learnings\learnings> terraform state show aws_instance.nginx
+# aws_instance.nginx:
+resource "aws_instance" "nginx" {
+    ami                                  = "ami-0f409bae3775dc8e5"
+    arn                                  = "arn:aws:ec2:us-east-1:496611468370:instance/i-0381df5366b53985a"
+    associate_public_ip_address          = true
+    availability_zone                    = "us-east-1d"
+    cpu_core_count                       = 2
+    cpu_threads_per_core                 = 1
+    disable_api_stop                     = false
+    disable_api_termination              = false
+    ebs_optimized                        = false
+    get_password_data                    = false
+    hibernation                          = false
+    id                                   = "i-0381df5366b53985a"
+    instance_initiated_shutdown_behavior = "stop"
+    instance_state                       = "running"
+    instance_type                        = "t2.medium"
+    ipv6_address_count                   = 0
+    ipv6_addresses                       = []
+    monitoring                           = false
+    placement_partition_number           = 0
+    primary_network_interface_id         = "eni-0a05af5e3e6bfae81"
+    private_dns                          = "ip-172-31-40-243.ec2.internal"    
+    private_ip                           = "172.31.40.243"
+    public_dns                           = "ec2-107-22-46-222.compute-1.amazonaws.com"
+    public_ip                            = "107.22.46.222"
+    secondary_private_ips                = []
+    security_groups                      = [
+        "default",
+    ]
+    source_dest_check                    = true
+    subnet_id                            = "subnet-0a8dc95b5bb6fc8a6"
+    tags                                 = {}
+    tags_all                             = {}
+    tenancy                              = "default"
+    user_data_replace_on_change          = false
+    vpc_security_group_ids               = [
+        "sg-0126006bfc8f20e28",
+    ]
+
+    capacity_reservation_specification {
+        capacity_reservation_preference = "open"
+    }
+
+    cpu_options {
+        core_count       = 2
+        threads_per_core = 1
+    }
+
+    credit_specification {
+        cpu_credits = "standard"
+    }
+
+    enclave_options {
+        enabled = false
+    }
+
+    maintenance_options {
+        auto_recovery = "default"
+    }
+
+    metadata_options {
+        http_endpoint               = "enabled"
+        http_protocol_ipv6          = "disabled"
+        http_put_response_hop_limit = 1
+        http_tokens                 = "optional"
+        instance_metadata_tags      = "disabled"
+    }
+
+    private_dns_name_options {
+        enable_resource_name_dns_a_record    = false
+        enable_resource_name_dns_aaaa_record = false
+        hostname_type                        = "ip-name"
+    }
+
+    root_block_device {
+        delete_on_termination = true
+        device_name           = "/dev/xvda"
+        encrypted             = true
+        iops                  = 100
+        kms_key_id            = "arn:aws:kms:us-east-1:496611468370:key/98863caf-27e4-4ea4-95ae-c9bbbbba02cb"
+        tags                  = {}
+        throughput            = 0
+        volume_id             = "vol-0d51bdde6cd877057"
+        volume_size           = 8
+        volume_type           = "gp2"
+    }
+}
+
+
+terraform state rm aws_instance.nginx
+
+
+
+terraform state mv aws_instance.nginx
+
+but this will create conflict in the main.tf and state file
+
+
+
+existing resources in aws?
+you can use import command to bring it to your terraform configuration
+
+taint
+for marking a resource to be recreated(terraform deletes and creates the resource again)
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,16 @@
+terraform fmt
+
+This help us in formating the file.
+
+terraform fmt --diff 
+
+to see how it is formating the file
+
+terraform doesn't care about spaces, but for our clarity we want code to be properly indented
+
+when we are using --diff we are generally doing this in development environments
+
+moreover this just fixes the indentation in local memory
+
+For production, flags like --write=false are used in the pipelines as it fails the code and don't let it pass to the next stage if there is identation error.
+

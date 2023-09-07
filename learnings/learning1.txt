@@ -1,0 +1,73 @@
+terraform init
+==============
+
+
+This is the first command you use once you are done writing your terraform code.
+
+
+
+# Define the provider (AWS in this case)
+provider "aws" {
+  region = "us-east-1"  # You can change the region to your desired region
+}
+
+# Define the AWS EC2 instance resource
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"  # Amazon Linux 2 AMI ID
+  instance_type = "t2.micro"               # Instance type (change as needed)
+}
+
+# Output the public IP address of the EC2 instance
+output "public_ip" {
+  value = aws_instance.example.public_ip
+}
+
+Once you do terraform init
+
+It downloads aws plugin and place it in local directory.
+
+Where is this local directory?
+
+.terraform is the location 
+
+Terraform downloads the plugin in .terraform and using this plugin to make the api calls.
+
+What is the use of downloaded plugin?
+
+It helps terraform understand things like:
+
+what is aws?
+what is ec2?
+what is a security group?
+what is a nacl? 
+etc...............
+
+
+In production we don't provide plugins like the way we did in this case.
+
+
+In production we seperately create a file like terraform.tf so that everyone gets the same version of the plugins.
+
+
+
+What is the use of .terraform.lock.hcl?
+
+Whever harshicorp upgrades the version of plugin they make sure they have the backward compatibility.
+Plugin version error:
+Out of the blue if someone tries to run the code with different version of a plugin than which is mentioned in lock file terraform checks in lock file and the run command fails.
+
+
+
+Is there a way we can check if versions are correct before running the script in prod?
+
+Always check in terraform registry for latest version of plugins and test them in pre-prod environments.
+
+
+When you run terraform init, it checks the main.tf provider and installs the plugin.
+If provider is not mentioned it will check the resource and will try to locate the plugin for that. 
+And it downloads always the latest plugins.
+
+
+terraform init checks all the *.tf 
+
+So that is how it is able to look into terraform.tf file as well as main.tf and more.

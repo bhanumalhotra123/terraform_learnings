@@ -1,0 +1,6 @@
+Auto approve:
+
+terraform apply -auto-approve
+
+This is scary! Be cautious if you are using it.
+

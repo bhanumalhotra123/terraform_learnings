@@ -1,0 +1,59 @@
+State file: 
+==========
+
+terraform.tfstate   This file tracks all the changes
+
+terraform plan just doesn't read the following files but it goes to contact our cloud provider and checks the state and store it in memory(refreshing state)
+.tf files      on disk
+State files    on disk
+Refreshing State -----? In memory not on the disk
+
+Now say you change main.tf file
+t2.micro is changed to t2.medium
+
+terraform destory the t2.micro and create t2.medium.
+
+If you want to create both, you will have to add another configuration.
+
+Please check the result of terraform plan always to see what it is destroying.
+
+
+resource "aws_instance" "nginx" {
+  ami           = "ami-0c55b159cbfafe1f0"  # Amazon Linux 2 AMI ID
+  instance_type = "t2.micro"               # Instance type (change as needed)
+}
+
+resource "aws_instance" "nginx" {
+  ami           = "ami-0c55b159cbfafe1f0"  # Amazon Linux 2 AMI ID
+  instance_type = "t2.medium"               # Instance type (change as needed)
+}
+
+
+
+
+
+PS C:\Users\HP\Desktop\terraform_learnings\learnings> terraform plan                 
+aws_instance.nginx: Refreshing state... [id=i-0381df5366b53985a]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the
+following symbols:
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # aws_instance.nginx will be updated in-place
+  ~ resource "aws_instance" "nginx" {
+        id                                   = "i-0381df5366b53985a"
+      ~ instance_type                        = "t2.micro" -> "t2.medium"
+        tags                                 = {}
+        # (30 unchanged attributes hidden)
+
+        # (8 unchanged blocks hidden)
+    }
+
+Plan: 0 to add, 1 to change, 0 to destroy.
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run    
+"terraform apply" now.
