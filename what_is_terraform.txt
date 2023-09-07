@@ -2,7 +2,7 @@ https://www.terraform.io/
 
 What is terraform?
 
-Harshicorp tools: terraform, vault, packer etc
+Hashicorp tools: terraform, vault, packer etc
 
 Infrastructure as code(In aws = cloudformation)
 
@@ -10,11 +10,11 @@ Terraform takes the configuration file(*.tf) and makes the api calls on behalf o
 
 
 
-HCL(Harshicorp Configuration Language)
+HCL(Hashicorp Configuration Language)
 
-Why can't harshicorp use languages like yaml or yaml for configuration files? Why do they have HCL?
+Why can't hashicorp use languages like yaml or yaml for configuration files? Why do they have HCL?
 
-Mainly Harshicorp started it for terraform and later extended to other projects like packer etc.
+Mainly Hashicorp started it for terraform and later extended to other projects like packer etc.
 One of the reason for this is in case of json you can't add a comment, in HCL you can.
 
 
