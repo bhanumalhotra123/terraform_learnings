@@ -1,0 +1,240 @@
+Terraform is declarative() but the terraform language features imperativ-like features.
+
+Declarative IaC: Declarative IaC is like telling a contractor what you want the finished product to look like, and then trusting them to figure out how to build it.
+Imperative IaC: Imperative IaC is like telling a contractor how to build the finished product step-by-step.
+
+Infrastructure lifecycle
+
+PLAN DESIGN BUILD TEST DELIVER MAINTAIN AND RETIRE
+
+
+Broad way of defining it:
+DAY0 Planing & DESIGN
+DAY1 Develop and Iterate
+DAY2 Go live and maintain
+
+
+How IaC enhance the Infrastructure Lifecycle?
+
+IaC makes changes idempotent(No matter how many times you run IaC, you will end up with the same state that is expected.), consistent, repeatable and predicatable.
+
+Manageability: enable mutation via code
+
+Sensibility: avoud financial & reputational losses to even loss of life when considering government and military dependencies on Infrastructure.
+
+
+
+Non-idempotent vs Idempotent
+
+
+Idempotent IaC:
+
+resource "aws_instance" "my_vm" {
+  ami = "ami-01234567890abcdef0"
+  instance_type = "t2.micro"
+}
+
+If you run this Terraform code multiple times, Terraform will only create the VM once. If you try to create the VM again, Terraform will detect that the VM already exists and will not make any changes.
+This is because Terraform uses a state file to track the state of your infrastructure. When you run a Terraform command, Terraform compares the desired state of your infrastructure (as defined in your Terraform configuration files) to the current state of your infrastructure (as stored in the state file). 
+Terraform then makes any necessary changes to bring your infrastructure into the desired state.
+
+Non-idempotent IaC:
+
+aws ec2 run-instances --image-id ami-01234567890abcdef0 --instance-type t2.micro
+
+If you run this AWS CLI command multiple times, you will create a new VM each time. 
+This is because the AWS CLI does not track the state of your infrastructure.
+This can be problematic, because it can lead to you creating duplicate VMs or accidentally deleting VMs.
+
+
+
+Provisioning vs Deployment vs Orchestration
+
+
+
+
+Configuration Drift
+is when Provisioned infrastructure has an unexpected configuration change due to:
+1. team member manually adjusting configuration options
+2. malicious actors
+3. side affects from APIs, SDK or CLIs.
+
+What can we detect?
+Compliance tools: AWS Config, Azure Policies, GCP Security Health Analytics
+Storing the expected state ex- Terraform state files
+Built-in support for drift detection ex- AWS Cloud formation drift detection
+
+How to correct?
+A compliance tool that can remediate misconfiguration ex- AWS Config
+Terraform refresh and plan commands
+manually correcting the configuration (not recommended)
+Tearing down and setting up the infrastructure again
+
+How to prevent configuration drift?
+Immutable infrastructure, always create and destroy, never reuse.
+   Servers are never modified after they are deployed
+        Baking AMI images or containers via AWS Image Builder or HashiCorp Packer or a build Server ex- GCP Cloud run
+Using GitOps to version control our IaC, and peer review every single via Pull Requests change to infrastructure
+
+
+
+Mutable vs Immutable
+
+Journey
+Develop ---> Deploy ---> Configure
+
+Mutable: A VM is deployed and then a configuration management tool like ansible or chef is used to configure the state of the Server
+
+Immutable: A VM is launched and provisioned, and then it is turned into a Virtual Image, stored in image repository, that image is used to deploy VM instances.
+
+
+
+What is GitOps?
+
+GitOps is when you take Infrastructure as Code and you use git repository to introduce a formal process to review and accept changes to infrastructure code,
+once that code is accepted, it automatically triggers a deploy.
+
+terraform file --> Github -->  Commits --> Pull Request ---> merge ---> Main ---> Github Actions---> deploy
+
+
+
+
+Terraform encourages you towards an immutable infrastructure architect so you get the following gurantees.
+
+Cloud Resource Failure: What if an EC2 instance fails a status check?
+
+Application Failure: What if your post installation script fails due to change in package
+
+Time to Deploy: What if i need to deploy in a hurry?
+
+Worst Case Scenario: Accidental Deletion, Comprised by malicious actor, Need to Change Regions(region outage)
+
+No gurantee of 1 to 1: Every time cloud-init runs post deploy there is no gurantee its one to one with your VM.
+
+
+
+
+
+What is HarshiCorp?
+
+Company which supports tools that support the development and deployment of large-scale service-oriented software installations.
+
+They also have  HarshiCorp Cloud Platform(Unified Platform to access HarshiCorp various products.) which is cloud agnostic
+
+supports main CSPs like AWS, AZure and GCP
+
+
+
+HarshiCorp Products:
+Boundary: Secure remote access to systems based on trusted identity.
+Consul: service discovery platform. Providess a full featured service mesh for secure service segmentation across any cloud or runtime environment, and distributed key-value storage for application configuration.
+Nomad: Scheduling and deployment of tasks across worker nodes in a cluster.
+Packer: tool for building virtual-machine images for later deployment.
+Terraform: IaC
+Vagrant: building and maintaenace of reproducible software-development environments via virtualization technology
+Vault: secret management, identity-based access, encrypting application data and auditing of secrets for applications.
+Waypoint: modern workflow to build, deploy, and release across platforms.
+
+
+
+
+
+Terraform is an IaC tool
+Configuration files are written in HarshiCorp Configuration language
+
+Notable Features of terraform:
+Install modules
+Plan and predict changes
+Dependency graphing
+State management
+Provision infrastructure in familiar languages (via AWS CDK)
+Terraform Registry with 1000+ providers
+
+Terraform Cloud SaaS: Remote state storage, Version Control Integrations, Flexible Workflows, Collabrate on Infrastructure changes in a single unified web portal.
+
+www.terraform.io/cloud
+
+
+
+
+
+Terraform Lifecycle
+Code: Write or update your terraform configuration file
+init: Initialize your project, pull latest providers and modules
+plan: Speculate what will change or Generate a saved execution plan
+validate: Ensure types and values are valid. Ensures required attributes are present
+apply: execute the terraform plan provisioning the infrastructure 
+destroy: Destroy the remote infrastructure
+
+
+
+
+what is change management? A standard approach to apply change, and resolving conflicts brought about by change.
+In the context of Infrastructure as Code (IaC), Change management is the procedure that will be followed when resources are modify and applied via configuration script.
+
+what is change automation? A way of automatically creating a consistent, systematic and predictable way of managing change requst via controls and policies.
+
+Terraform uses change automation in the form of execution plans and resource graphst apply and review complex changesets.
+Change automation allows us to exactly know what terraform will change and in what order, avoiding many possible human errors.
+
+A changset is a collection that represent changes made to a versioning repository. IaC uses ChangeSets so you can see what has changedby who over time.
+
+
+
+Execution Plans
+manual review of what will add, change or destroy before you apply changes eg. terraform apply
+
+resources and configuration settings will be listed
+It will indicate will be added, changed or destroyed if plan is approved.
+
+
+Visualizing Execution Plans
+You can visualize an execution plan as a graph using terraform graph command Terraform will output a GraphViz file
+(you will need GraphViz installed to view the file)
+
+terraform graph | dot -Tsvg > graph.svg
+
+
+
+Terraform Resource Graph
+
+Terraform builds a dependency graphfrom the Terraform configurations, and walks this graph to generate plans, refresh state and more.
+
+Rectangle represents a single resource
+Elipse respresents a group of resources.
+Rhombus represents the time to fully configure a providers
+
+
+
+
+Terraform (Use Cases)
+
+supports variety of providers
+multi-tier applications ( easy to divide large and complex applications into isolate configuration scripts)
+easily standup an environment for a software demo or a temporary deployment.
+resource schedulers: can also be used to dynamic schedule Docker containers, Hadoop, Spark and other software tools.You can provision your own scheduling grid.
+
+Multi-Cloud Deployment.
+
+
+
+Terraform Core and Terraform Plugins
+
+Core uses remote procedure calls (RPC) to communicate with Terraform plugins [Statically compiled binary written in golang]
+
+Plugins expose an implementation for a specific service or provisioner
+
+Terraform Core---RPC---> Plugins[Providers, Provisioners] ----GOLANG----> Client Library ---HTTP(S)---> Target APIs
+
+
+
+Resource to learn more: Terraform Up and Running
+www.terraform-best-practices
+
+Terraform Provisioners install software, edit files, and provision machines created with Terraform
+Terraform allows you to work with two different provisioners.
+cloud-init and packer
+
+
+
+

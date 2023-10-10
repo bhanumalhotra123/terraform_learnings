@@ -1,0 +1,7 @@
+Limitation of terraform plan:
+
+Let us say AWS completely ran out of resources for say t2.micro.
+
+terraform plan have no way to check that, it will show the that it will be created.
+
+But when you use terraform apply, it will fail as aws don't have resources.
