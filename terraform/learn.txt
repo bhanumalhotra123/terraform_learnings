@@ -231,9 +231,42 @@ Terraform Core---RPC---> Plugins[Providers, Provisioners] ----GOLANG----> Client
 Resource to learn more: Terraform Up and Running
 www.terraform-best-practices
 
+
 Terraform Provisioners install software, edit files, and provision machines created with Terraform
 Terraform allows you to work with two different provisioners.
 cloud-init and packer
+
+Cloud-Init is a standard configuration management tool that is available on most Linux distributions and all major cloud providers. 
+It allows you to provision instances with a common scripting language. You can use Cloud-Init to install packages, configure users and security, write files, and do other tasks you want automatically handled on the first or subsequent boots.
+
+Packer is a tool for creating machine images for multiple platforms from a single source configuration. It is commonly used to create images for cloud providers, such as AWS, Azure, and Google Cloud Platform. Packer can also be used to create images for other platforms, such as Docker and Vagrant
+
+
+
+
+
+
+
+
+
+
+
+
+
+Terraform and Consul
+Consul is a service networking platform which provides:
+1. Service discovery -- central registry for services in the network
+   . Allows for direct communication, no single-point of failure via load balancers.
+2. Service mesh -- managing network traffic between services 
+   . A communication layer on top of your container application, think middleware
+3, Application configuration capabilities
+
+Consul integrates with Terraform in the following ways:
+Remote Backend
+  Consul has a Key Value Store to store configurations
+
+Consul Provider
+
 
 
 
